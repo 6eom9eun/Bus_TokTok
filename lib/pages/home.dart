@@ -84,7 +84,6 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-
                 SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () {
@@ -105,6 +104,25 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
+                SizedBox(height: 20.0),
+                ElevatedButton(
+                  onPressed: () {
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.amber),
+                    padding: MaterialStateProperty.all(
+                      EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                    ),
+                  ),
+                  child: Text(
+                    '맛집',
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                )
               ],
             ),
           ),
