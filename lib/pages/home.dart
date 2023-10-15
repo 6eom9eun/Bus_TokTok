@@ -57,12 +57,17 @@ class _HomeState extends State<Home> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return WeatherScreen(
-                        parseWeatherData: widget.parseWeatherData,
-                        parseAirPollution: widget.parseAirPollution,
-                      );
-                    }));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return WeatherScreen(
+                            parseWeatherData: widget.parseWeatherData,
+                            parseAirPollution: widget.parseAirPollution,
+                          );
+                        },
+                      ),
+                    );
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.amber),
@@ -79,6 +84,7 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
+
                 SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () {
