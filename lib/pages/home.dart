@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackathon/pages/weather_screen.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class Home extends StatefulWidget {
   final dynamic parseWeatherData;
@@ -16,6 +17,40 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  late stt.SpeechToText _speech;
+  bool _isListening = false;
+  String _text = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _speech = stt.SpeechToText();
+  }
+
+  _startListening() async {
+    if (!_isListening) {
+      bool available = await _speech.initialize(onStatus: (val) {
+        if (val == 'notListening') {
+          setState(() => _isListening = false);
+        }
+      }, onError: (val) => print('onError: $val'));
+
+      if (available) {
+        setState(() => _isListening = true);
+        _speech.listen(onResult: (val) {
+          setState(() {
+            _text = val.recognizedWords;
+          });
+        },
+        localeId: 'ko-KR' // STT : text 한글로
+      );
+      }
+    } else {
+      setState(() => _isListening = false);
+      _speech.stop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,11 +94,24 @@ class _HomeState extends State<Home> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) {
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) {
                           return WeatherScreen(
                             parseWeatherData: widget.parseWeatherData,
                             parseAirPollution: widget.parseAirPollution,
+                          );
+                        },
+                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          var begin = 0.0;
+                          var end = 1.0;
+                          var curve = Curves.easeInOut;
+                          var opacityTween = Tween(begin: begin, end: end).chain(
+                            CurveTween(curve: curve),
+                          );
+
+                          return FadeTransition(
+                            opacity: opacityTween.animate(animation),
+                            child: child,
                           );
                         },
                       ),
@@ -86,9 +134,7 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(height: 20.0),
                 ElevatedButton(
-                  onPressed: () {
-                    // "음성 입력" 버튼 동작을 추가하세요.
-                  },
+                  onPressed: _startListening,
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.amber),
                     padding: MaterialStateProperty.all(
@@ -104,6 +150,8 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
+                SizedBox(height: 20.0),
+                Text(_text),  // 음성 텍스트를 보여줍니다
                 SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () {
