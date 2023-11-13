@@ -4,7 +4,7 @@ import 'package:hackathon/data/network.dart';
 import 'package:hackathon/pages/home.dart'; // Import the Home widget
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-const apiKey = '09530d1ccfae5c1d0f1d1d82d5027b94';
+const apiKey = '배포XXX';
 
 class Loading extends StatefulWidget {
   const Loading({super.key});
