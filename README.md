@@ -29,9 +29,3 @@
 ![KakaoTalk_20231127_174335003_02](https://github.com/6eom9eun/flutter_weatherApi_stt/assets/104510730/0495cb69-295b-484e-83ec-8a905924d57c)
 
 </details>
-
-  
-![KakaoTalk_20231207_171725968_03](https://github.com/6eom9eun/AIVLE_miniProject_7/assets/104510730/32d13fbd-2966-411d-b6ab-48c543b92bec)
-
-</details>
-
